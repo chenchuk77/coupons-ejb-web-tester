@@ -27,19 +27,19 @@ public class AdminServiceResource {
 	@EJB
 	private IncomeService incomeService;
 
-	
+
 	@GET
 	@Path("/login/{username}/{password}")
 	public Message login (
-			@PathParam("username") String name, 
-			@PathParam("password") String password, 
+			@PathParam("username") String name,
+			@PathParam("password") String password,
 			@Context HttpServletRequest request) throws CouponException{
 		AdminFacade adminFacade = (AdminFacade) CouponSystem.getInstance().login(name, password, ClientType.ADMIN);
 		request.getSession(true).setAttribute(ADMIN_SESSION_ATTR, adminFacade);
 		System.out.println("AdminServiceResource:\tAdmin logged in");
 		return new Message("Successfully logged in as administrator");
 	}
-	
+
 	@GET
 	@Path("/logout")
 	public Message logout (
@@ -54,7 +54,7 @@ public class AdminServiceResource {
 		System.out.println("AdminServiceResource:\tAdmin logged out");
 		return new Message("Successfully logged out administrator");
 	}
-	
+
 	@GET
 	@Path("/viewAllIncomes")
 	public Income[] getAllIncomes(
@@ -74,7 +74,7 @@ public class AdminServiceResource {
 		System.out.println("AdminServiceResource:\tAdmin request all incomes for customer " + invokerId);
 		return incomeService.viewIncomeByCustomer(invokerId).toArray(new Income[0]);
 	}
-	
+
 	@GET
 	@Path("/viewIncomeByCompany/{invokerId}")
 	public Income[] getCompanyIncome(
